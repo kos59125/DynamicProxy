@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="RecycleBin.DynamicProxy.Tests\bin\Debug\RecycleBin.DynamicProxy.Tests.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto">
+    <assembly path="RecycleBin.DynamicProxy.Tests\bin\Release\RecycleBin.DynamicProxy.Tests.dll" />
+  </Config>
+</NUnitProject>
