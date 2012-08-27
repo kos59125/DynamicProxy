@@ -34,6 +34,14 @@ namespace RecycleBin.DynamicProxy
       }
 
       [Test]
+      public void TestCreateType()
+      {
+         var builder = new DynamicProxyBuilder("RecycleBin.DynamicProxy.Proxy");
+         var proxyType = builder.CreateProxyType(typeof(IPerson), typeof(Person));
+         Assert.That(typeof(IPerson).IsAssignableFrom(proxyType), Is.True);
+      }
+
+      [Test]
       [ExpectedException(typeof(NotSupportedException))]
       public void TestAnotherTypeGetter()
       {
