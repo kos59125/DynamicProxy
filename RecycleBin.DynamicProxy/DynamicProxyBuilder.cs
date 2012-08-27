@@ -28,7 +28,7 @@ namespace RecycleBin.DynamicProxy
       {
          this.assemblyName = new AssemblyName(assemblyName);
          this.assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(this.assemblyName, AssemblyBuilderAccess.RunAndSave);
-         this.moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName);
+         this.moduleBuilder = assemblyBuilder.DefineDynamicModule(this.assemblyName + ".dll");
          this.cache = new Dictionary<Tuple<Type, Type>, Type>();
       }
 
