@@ -64,17 +64,17 @@ namespace RecycleBin.DynamicProxy
          {
             throw new ArgumentNullException("entityType");
          }
-         var proxyType = GetProxyType(entityType, proxyInterface);
+         var proxyType = CreateProxyType(proxyInterface, entityType);
          return Activator.CreateInstance(proxyType, entity);
       }
 
       /// <summary>
       /// Gets the proxy type of the entity type.
       /// </summary>
-      /// <param name="entityType">The static type of instance.</param>
       /// <param name="proxyInterface">The interface type of proxy.</param>
+      /// <param name="entityType">The static type of instance.</param>
       /// <returns>The proxy type implementing <paramref name="proxyInterface"/>.</returns>
-      public Type GetProxyType(Type entityType, Type proxyInterface)
+      public Type CreateProxyType(Type proxyInterface, Type entityType)
       {
          if (entityType == null)
          {
@@ -89,11 +89,11 @@ namespace RecycleBin.DynamicProxy
             throw new ArgumentException(string.Format("{0} is not an interface type.", proxyInterface.FullName), "proxyInterface");
          }
          var tuple = Tuple.Create(entityType, proxyInterface);
-         var proxyType = this.cache.TryGetValueOrCreate(tuple, () => CreateProxyType(entityType, proxyInterface));
+         var proxyType = this.cache.TryGetValueOrCreate(tuple, () => CreateProxyTypeInternal(proxyInterface, entityType));
          return proxyType;
       }
 
-      private Type CreateProxyType(Type entityType, Type proxyInterface)
+      private Type CreateProxyTypeInternal(Type proxyInterface, Type entityType)
       {
          var attribute = proxyInterface.GetCustomAttributes(typeof(ProxyInterfaceAttribute), false) as ProxyInterfaceAttribute[];
          var implementedInterface = attribute.Length == 0 ? proxyInterface : attribute[0].InterfaceType;
