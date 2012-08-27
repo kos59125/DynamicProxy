@@ -15,9 +15,10 @@ namespace RecycleBin.DynamicProxy
       private const MethodAttributes PropertyAttribute = MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.Virtual;
       private static readonly ConstructorInfo DefaultConstructor = typeof(object).GetConstructor(Type.EmptyTypes);
 
+      private readonly AssemblyName assemblyName;
       private readonly AssemblyBuilder assemblyBuilder;
-      private readonly Dictionary<Tuple<Type, Type>, Type> cache;
       private readonly ModuleBuilder moduleBuilder;
+      private readonly Dictionary<Tuple<Type, Type>, Type> cache;
 
       /// <summary>
       /// Initializes a new instance.
@@ -25,15 +26,18 @@ namespace RecycleBin.DynamicProxy
       /// <param name="assemblyName">The name of assembly defining proxy types.</param>
       public DynamicProxyBuilder(string assemblyName)
       {
-         var name = new AssemblyName(assemblyName);
-         this.assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.RunAndSave);
-         this.moduleBuilder = assemblyBuilder.DefineDynamicModule(name.FullName + ".dll");
+         this.assemblyName = new AssemblyName(assemblyName);
+         this.assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(this.assemblyName, AssemblyBuilderAccess.RunAndSave);
+         this.moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName);
          this.cache = new Dictionary<Tuple<Type, Type>, Type>();
       }
 
-      public void Save(string s)
+      /// <summary>
+      /// Saves the current assembly as a file.
+      /// </summary>
+      public void Export()
       {
-         this.assemblyBuilder.Save(s);
+         this.assemblyBuilder.Save(this.assemblyName.Name + ".dll");
       }
 
       /// <summary>

@@ -9,6 +9,31 @@ namespace RecycleBin.DynamicProxy
    internal class DynamicProxyBuilderTest
    {
       [Test]
+      public void TestExport()
+      {
+         const string name = "RecycleBin.DynamicProxy.Proxy";
+         const string dll = name + ".dll";
+         try
+         {
+            Assert.That(File.Exists(dll), Is.False);
+            var builder = new DynamicProxyBuilder(name);
+            builder.CreateProxyType(typeof(IPerson), typeof(Person));
+            builder.Export();
+            Assert.That(File.Exists(dll), Is.True);
+         }
+         finally
+         {
+            try
+            {
+               File.Delete(dll);
+            }
+            catch (FileNotFoundException)
+            {
+            }
+         }
+      }
+
+      [Test]
       [ExpectedException(typeof(NotSupportedException))]
       public void TestAnotherTypeGetter()
       {
