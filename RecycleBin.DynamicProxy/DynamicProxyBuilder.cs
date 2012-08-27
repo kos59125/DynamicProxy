@@ -101,7 +101,8 @@ namespace RecycleBin.DynamicProxy
       {
          var attribute = proxyInterface.GetCustomAttributes(typeof(ProxyInterfaceAttribute), false) as ProxyInterfaceAttribute[];
          var implementedInterface = attribute.Length == 0 ? proxyInterface : attribute[0].InterfaceType;
-         var proxyTypeBuilder = this.moduleBuilder.DefineType(entityType.FullName + "+Proxy", TypeAttributes.Public | TypeAttributes.SpecialName, typeof(object), new[] { implementedInterface });
+         var proxyTypeName = string.Format("{0}.+{1}.+{2}.{3}Proxy", this.assemblyName.Name, implementedInterface.FullName, entityType.FullName, entityType.Name);
+         var proxyTypeBuilder = this.moduleBuilder.DefineType(proxyTypeName, TypeAttributes.Public | TypeAttributes.SpecialName, typeof(object), new[] { implementedInterface });
 
          var self = proxyTypeBuilder.DefineField("self", entityType, FieldAttributes.Private);
          EmitConstructor(proxyTypeBuilder, self, entityType);
