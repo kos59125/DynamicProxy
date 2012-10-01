@@ -43,7 +43,7 @@ namespace RecycleBin.DynamicProxy
       /// <summary>
       /// Creates a proxy of the specified object. 
       /// </summary>
-      /// <typeparam name="TProxy">The interface type of proxy.</typeparam>
+      /// <param name="proxyInterface">The interface type of proxy.</param>
       /// <param name="entity">The instance.</param>
       /// <returns>The proxy.</returns>
       public object CreateProxy(Type proxyInterface, object entity)
@@ -58,7 +58,7 @@ namespace RecycleBin.DynamicProxy
       /// <summary>
       /// Creates a proxy of the specified object. 
       /// </summary>
-      /// <typeparam name="TProxy">The interface type of proxy.</typeparam>
+      /// <param name="proxyInterface">The interface type of proxy.</param>
       /// <param name="entity">The instance.</param>
       /// <param name="entityType">The static type of the instance.</param>
       /// <returns>The proxy.</returns>

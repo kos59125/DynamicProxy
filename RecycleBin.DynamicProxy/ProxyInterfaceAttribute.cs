@@ -17,6 +17,10 @@ namespace RecycleBin.DynamicProxy
          get { return this.interfaceType; }
       }
 
+      /// <summary>
+      /// Initializes a new instance.
+      /// </summary>
+      /// <param name="interfaceType">The interface type.</param>
       public ProxyInterfaceAttribute(Type interfaceType)
       {
          if (interfaceType == null)
