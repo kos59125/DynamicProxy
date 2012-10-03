@@ -6,3 +6,5 @@ TestResults/
 *.VisualState.xml
 TestResult.xml
 
+publish/
+*.nupkg
