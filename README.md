@@ -29,7 +29,7 @@ And, we'd like to output messages on the console like this:
 Logger.LogMessage("Hello, World.", Console.Out);
 ```
 
-Of course this produces a compilation error because builder does not implement IRecordable.
+Of course this produces a compilation error because Console.Out does not implement IRecordable.
 We can use DynamicProxy here like this:
 
 ```csharp
